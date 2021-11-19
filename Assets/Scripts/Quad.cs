@@ -6,7 +6,7 @@ public class Quad
 {
 	public Mesh mesh;
 
-	public Quad(Block.BlockSide side, Vector3 offset)
+	public Quad(Block.BlockSide side, Vector3 offset, MeshUtils.BlockType bType)
     {
 
         mesh = new Mesh();
@@ -18,12 +18,12 @@ public class Quad
         int[] triangles = new int[6];
 		triangles = new int[] { 3, 1, 0, 3, 2, 1 };
 
-		Vector2 uv00 = new Vector2(0, 0);
-        Vector2 uv10 = new Vector2(1, 0);
-        Vector2 uv01 = new Vector2(0, 1);
-        Vector2 uv11 = new Vector2(1, 1);
+		Vector2 uv00 = MeshUtils.blockUVs[(int)bType,0];
+        Vector2 uv10 = MeshUtils.blockUVs[(int)bType, 1];
+		Vector2 uv01 = MeshUtils.blockUVs[(int)bType, 2];
+		Vector2 uv11 = MeshUtils.blockUVs[(int)bType, 3];
 
-        Vector3 p0 = new Vector3(-0.5f, -0.5f, 0.5f) + offset;
+		Vector3 p0 = new Vector3(-0.5f, -0.5f, 0.5f) + offset;
         Vector3 p1 = new Vector3(0.5f, -0.5f, 0.5f) + offset;
         Vector3 p2 = new Vector3(0.5f, -0.5f, -0.5f) + offset;
         Vector3 p3 = new Vector3(-0.5f, -0.5f, -0.5f) + offset;
