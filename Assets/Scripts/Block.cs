@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour {
+public class Block : MonoBehaviour 
+{
     [System.Serializable]
     public enum BlockSide { BOTTOM, TOP, LEFT, RIGHT, FRONT, BACK };
     public Material atlas;
 
-    // Start is called before the first frame update
-    void Start() {
+    private void Start() 
+    {
         MeshFilter mf = this.gameObject.AddComponent<MeshFilter>();
         MeshRenderer mr = this.gameObject.AddComponent<MeshRenderer>();
         mr.material = atlas;
@@ -31,10 +32,5 @@ public class Block : MonoBehaviour {
 
         mf.mesh = MeshUtils.MergeMeshes(sideMeshes);
         mf.mesh.name = "Cube_0_0_0";
-    }
-
-    // Update is called once per frame
-    void Update() {
-
     }
 }
