@@ -24,6 +24,18 @@ public static class MeshUtils
         /*SAND*/	  { new Vector2(0.125f,0.875f),  new Vector2(0.1875f,0.875f),
                         new Vector2(0.125f,0.9375f), new Vector2(0.1875f,0.9375f)}
     };
+    
+    public static float FractalBrownianMotion(float x, float z, int octaves, float scale, float heightScale, float heightOffset)
+    {
+        float total = 0f;
+        float frequency = 1f;
+        for (int i = 0; i < octaves; i++)
+        {
+            total += Mathf.PerlinNoise(x * scale * frequency, z * scale * frequency) * heightScale;
+            frequency *= 2;
+        }
+        return total + heightOffset;
+    }
 
     public static Mesh MergeMeshes(Mesh[] meshes) 
     {

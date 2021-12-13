@@ -23,7 +23,15 @@ public class Chunk : MonoBehaviour
         chunkData = new MeshUtils.BlockType[blockCount];
         for (var i = 0; i < blockCount; i++)
         {
-            chunkData[i] = MeshUtils.BlockType.DIRT;
+            int x = i % width;
+            int y = (i / width) % height;
+            int z = i / (width * height);
+
+            if (MeshUtils.FractalBrownianMotion(x, z, 8, 0.001f, 10, -33) > y)
+                chunkData[i] = MeshUtils.BlockType.DIRT;
+            else
+                chunkData[i] = MeshUtils.BlockType.AIR;
+
         }
     }
 
