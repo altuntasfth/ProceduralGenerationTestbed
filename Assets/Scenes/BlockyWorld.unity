@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 800249181}
   - component: {fileID: 800249180}
   m_Layer: 0
-  m_Name: Block
+  m_Name: Chunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,10 +242,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 800249179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86fc571bfec97463a8803ecd982813b6, type: 3}
+  m_Script: {fileID: 11500000, guid: ed2826c222d446999da77d27bf113629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   atlas: {fileID: 2100000, guid: 764a8aeda61dc47faa316c632208e8ce, type: 2}
+  width: 10
+  height: 10
+  depth: 10
 --- !u!4 &800249181
 Transform:
   m_ObjectHideFlags: 0
