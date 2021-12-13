@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
@@ -13,6 +14,13 @@ public class Chunk : MonoBehaviour
     public int width = 2;
     public int height = 2;
     public int depth = 2;
+    
+    [Header("Perlin Settings")]
+    public float heightScale = 10f;
+    public float scale = 0.01f;
+    public int octaves = 8;
+    public float heightOffset = -33f;
+    public Vector3 location;
 
     public Block[,,] blocks;
     public MeshUtils.BlockType[] chunkData;
@@ -23,11 +31,11 @@ public class Chunk : MonoBehaviour
         chunkData = new MeshUtils.BlockType[blockCount];
         for (var i = 0; i < blockCount; i++)
         {
-            int x = i % width;
-            int y = (i / width) % height;
-            int z = i / (width * height);
+            int x = i % width + (int)location.x;
+            int y = (i / width) % height + (int)location.y;
+            int z = i / (width * height) + (int)location.z;
 
-            if (MeshUtils.FractalBrownianMotion(x, z, 8, 0.001f, 10, -33) > y)
+            if (MeshUtils.FractalBrownianMotion(x, z, octaves, scale, heightScale, heightOffset) > y)
                 chunkData[i] = MeshUtils.BlockType.DIRT;
             else
                 chunkData[i] = MeshUtils.BlockType.AIR;
@@ -37,6 +45,16 @@ public class Chunk : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+
+    public void CreateChunk(Vector3 dimensions, Vector3 position)
+    {
+        location = position;
+        width = (int)dimensions.x;
+        height = (int)dimensions.y;
+        depth = (int)dimensions.z;
+        
         MeshFilter mf = this.gameObject.AddComponent<MeshFilter>();
         MeshRenderer mr = this.gameObject.AddComponent<MeshRenderer>();
         mr.material = atlas;
@@ -58,7 +76,7 @@ public class Chunk : MonoBehaviour
             {
                 for (var x = 0; x < width; x++)
                 {
-                    blocks[x, y, z] = new Block(new Vector3(x, y, z), chunkData[x + width * (y + depth * z)], this);
+                    blocks[x, y, z] = new Block(new Vector3(x, y, z) + location, chunkData[x + width * (y + depth * z)], this);
                     if (blocks[x, y, z].mesh != null)
                     {
                         inputMeshes.Add(blocks[x, y, z].mesh);
@@ -85,7 +103,7 @@ public class Chunk : MonoBehaviour
         
         var handle = jobs.Schedule(inputMeshes.Count, 4);
         var newMesh = new Mesh();
-        newMesh.name = "Chunk";
+        newMesh.name = "Chunk_" + location.x + "_" + location.y + "_" + location.z;
         var subMesh = new SubMeshDescriptor(0, triStart, MeshTopology.Triangles);
         subMesh.firstVertex = 0;
         subMesh.vertexCount = vertexStart;
