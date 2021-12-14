@@ -35,11 +35,14 @@ public class Chunk : MonoBehaviour
             int y = (i / width) % height + (int)location.y;
             int z = i / (width * height) + (int)location.z;
 
-            if (MeshUtils.FractalBrownianMotion(x, z, octaves, scale, heightScale, heightOffset) > y)
+            int surfaceHeight = (int)MeshUtils.FractalBrownianMotion(x, z, octaves, scale, heightScale, heightOffset);
+
+            if (surfaceHeight == y)
+                chunkData[i] = MeshUtils.BlockType.GRASSSIDE;
+            else if (surfaceHeight > y)
                 chunkData[i] = MeshUtils.BlockType.DIRT;
             else
                 chunkData[i] = MeshUtils.BlockType.AIR;
-
         }
     }
 
