@@ -14,12 +14,6 @@ public class Chunk : MonoBehaviour
     public int width = 2;
     public int height = 2;
     public int depth = 2;
-    
-    [Header("Perlin Settings")]
-    public float heightScale = 10f;
-    public float scale = 0.01f;
-    public int octaves = 8;
-    public float heightOffset = -33f;
     public Vector3 location;
 
     public Block[,,] blocks;
@@ -35,7 +29,8 @@ public class Chunk : MonoBehaviour
             int y = (i / width) % height + (int)location.y;
             int z = i / (width * height) + (int)location.z;
 
-            int surfaceHeight = (int)MeshUtils.FractalBrownianMotion(x, z, octaves, scale, heightScale, heightOffset);
+            int surfaceHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.surfaceSettings.octaves, World.surfaceSettings.scale, 
+                World.surfaceSettings.heightScale, World.surfaceSettings.heightOffset);
 
             if (surfaceHeight == y)
                 chunkData[i] = MeshUtils.BlockType.GRASSSIDE;

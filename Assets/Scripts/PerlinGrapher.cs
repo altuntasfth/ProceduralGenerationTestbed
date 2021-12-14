@@ -6,17 +6,18 @@ public class PerlinGrapher : MonoBehaviour
 {
     public LineRenderer lr;
     public float heightScale = 2f;
+    [Range(0f, 1f)]
     public float scale = 0.5f;
     public int octaves = 1;
     public float heightOffset;
+    [Range(0f, 1f)]
+    public float probability;
 
     private void Start()
     {
         Graph();
     }
-
     
-
     private void Graph()
     {
         lr = GetComponent<LineRenderer>();

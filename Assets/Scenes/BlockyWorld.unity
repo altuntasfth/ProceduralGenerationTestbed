@@ -156,6 +156,8 @@ MonoBehaviour:
   mainCamera: {fileID: 963194225}
   fpc: {fileID: 1091338784}
   loadingBar: {fileID: 1397364390}
+  surface: {fileID: 675921686}
+  stone: {fileID: 1463165146}
 --- !u!4 &13269691
 Transform:
   m_ObjectHideFlags: 0
@@ -167,7 +169,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 675921685}
+  - {fileID: 1463165147}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -244,7 +248,7 @@ GameObject:
   - component: {fileID: 675921686}
   - component: {fileID: 675921684}
   m_Layer: 0
-  m_Name: PerlinGrapher
+  m_Name: Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,7 +274,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 0d6c8e1f91eab466bbe0e265ac20d54e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -454,13 +458,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675921683}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 13269691}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &675921686
 MonoBehaviour:
@@ -479,6 +483,7 @@ MonoBehaviour:
   scale: 0.001
   octaves: 8
   heightOffset: -18
+  probability: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +808,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1229295627
 GameObject:
@@ -899,7 +904,7 @@ RectTransform:
   m_Children:
   - {fileID: 1397364389}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1008,7 +1013,7 @@ GameObject:
   - component: {fileID: 1463165146}
   - component: {fileID: 1463165145}
   m_Layer: 0
-  m_Name: PerlinGrapher (1)
+  m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1034,7 +1039,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 0d6c8e1f91eab466bbe0e265ac20d54e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1228,6 +1233,7 @@ MonoBehaviour:
   scale: 0.001
   octaves: 8
   heightOffset: -28
+  probability: 0
 --- !u!4 &1463165147
 Transform:
   m_ObjectHideFlags: 0
@@ -1235,13 +1241,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463165144}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 13269691}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1516941116
 GameObject:
