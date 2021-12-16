@@ -6,6 +6,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 public class Chunk : MonoBehaviour
 {
@@ -29,11 +30,15 @@ public class Chunk : MonoBehaviour
             int y = (i / width) % height + (int)location.y;
             int z = i / (width * height) + (int)location.z;
 
-            int surfaceHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.surfaceSettings.octaves, World.surfaceSettings.scale, 
-                World.surfaceSettings.heightScale, World.surfaceSettings.heightOffset);
+            int surfaceHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.surfaceSettings.octaves, 
+                World.surfaceSettings.scale, World.surfaceSettings.heightScale, World.surfaceSettings.heightOffset);
+            int stoneHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.stoneSettings.octaves, 
+                World.stoneSettings.scale, World.stoneSettings.heightScale, World.stoneSettings.heightOffset);
 
             if (surfaceHeight == y)
                 chunkData[i] = MeshUtils.BlockType.GRASSSIDE;
+            else if (stoneHeight > y && Random.Range(0f, 1f) < World.stoneSettings.probability)
+                chunkData[i] = MeshUtils.BlockType.STONE;
             else if (surfaceHeight > y)
                 chunkData[i] = MeshUtils.BlockType.DIRT;
             else

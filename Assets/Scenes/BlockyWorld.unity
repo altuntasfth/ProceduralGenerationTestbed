@@ -1233,7 +1233,7 @@ MonoBehaviour:
   scale: 0.001
   octaves: 8
   heightOffset: -28
-  probability: 0
+  probability: 0.25
 --- !u!4 &1463165147
 Transform:
   m_ObjectHideFlags: 0
