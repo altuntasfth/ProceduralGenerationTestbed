@@ -34,12 +34,18 @@ public class Chunk : MonoBehaviour
                 World.surfaceSettings.scale, World.surfaceSettings.heightScale, World.surfaceSettings.heightOffset);
             int stoneHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.stoneSettings.octaves, 
                 World.stoneSettings.scale, World.stoneSettings.heightScale, World.stoneSettings.heightOffset);
+            int diamondTopHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.diamondTopSettings.octaves, 
+                World.diamondTopSettings.scale, World.diamondTopSettings.heightScale, World.diamondTopSettings.heightOffset);
+            int diamondBottomHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.diamondBottomSettings.octaves, 
+                World.diamondBottomSettings.scale, World.diamondBottomSettings.heightScale, World.diamondBottomSettings.heightOffset);
 
-            if (surfaceHeight == y)
+            if (y == surfaceHeight)
                 chunkData[i] = MeshUtils.BlockType.GRASSSIDE;
-            else if (stoneHeight > y && Random.Range(0f, 1f) < World.stoneSettings.probability)
+            else if (y < diamondTopHeight && y > diamondBottomHeight && Random.Range(0f, 1f) <= World.diamondTopSettings.probability)
+                chunkData[i] = MeshUtils.BlockType.DIAMOND;
+            else if (y < stoneHeight && Random.Range(0f, 1f) <= World.stoneSettings.probability)
                 chunkData[i] = MeshUtils.BlockType.STONE;
-            else if (surfaceHeight > y)
+            else if (y < surfaceHeight)
                 chunkData[i] = MeshUtils.BlockType.DIRT;
             else
                 chunkData[i] = MeshUtils.BlockType.AIR;
