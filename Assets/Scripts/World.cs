@@ -42,6 +42,9 @@ public class World : MonoBehaviour
     
     public static PerlinSettings diamondBottomSettings;
     public PerlinGrapher diamondBottom;
+    
+    public static PerlinSettings caveSettings;
+    public PerlinGrapher3D caves;
 
     private void Start()
     {
@@ -51,6 +54,7 @@ public class World : MonoBehaviour
         stoneSettings = new PerlinSettings(stone.heightScale, stone.scale, stone.octaves, stone.heightOffset, stone.probability);
         diamondTopSettings = new PerlinSettings(diamondTop.heightScale, diamondTop.scale, diamondTop.octaves, diamondTop.heightOffset, diamondTop.probability);
         diamondBottomSettings = new PerlinSettings(diamondBottom.heightScale, diamondBottom.scale, diamondBottom.octaves, diamondBottom.heightOffset, diamondBottom.probability);
+        caveSettings = new PerlinSettings(caves.heightScale, caves.scale, caves.octaves, caves.heightOffset, caves.drawCutOff);
         
         StartCoroutine(BuildWorld());
     }

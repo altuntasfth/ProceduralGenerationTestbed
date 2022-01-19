@@ -38,6 +38,8 @@ public class Chunk : MonoBehaviour
                 World.diamondTopSettings.scale, World.diamondTopSettings.heightScale, World.diamondTopSettings.heightOffset);
             int diamondBottomHeight = (int)MeshUtils.FractalBrownianMotion(x, z, World.diamondBottomSettings.octaves, 
                 World.diamondBottomSettings.scale, World.diamondBottomSettings.heightScale, World.diamondBottomSettings.heightOffset);
+            int digCave = (int)MeshUtils.FractalBrownianMotion3D(x, y, z, World.caveSettings.octaves, 
+                World.caveSettings.scale, World.caveSettings.heightScale, World.caveSettings.heightOffset);
 
             if (y == surfaceHeight)
                 chunkData[i] = MeshUtils.BlockType.GRASSSIDE;
@@ -49,6 +51,11 @@ public class Chunk : MonoBehaviour
                 chunkData[i] = MeshUtils.BlockType.DIRT;
             else
                 chunkData[i] = MeshUtils.BlockType.AIR;
+
+            if (digCave < World.caveSettings.probability)
+            {
+                chunkData[i] = MeshUtils.BlockType.AIR;
+            }
         }
     }
 

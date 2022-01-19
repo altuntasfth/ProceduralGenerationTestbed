@@ -61,12 +61,12 @@ public static class MeshUtils
     
     public static float FractalBrownianMotion3D(float x, float y, float z, int octaves, float scale, float heightScale, float heightOffset)
     {
-        float XY = FractalBrownianMotion(x, y, octaves, scale, heightOffset, heightOffset);
-        float XZ = FractalBrownianMotion(x, z, octaves, scale, heightOffset, heightOffset);
-        float YX = FractalBrownianMotion(y, x, octaves, scale, heightOffset, heightOffset);
-        float YZ = FractalBrownianMotion(y, z, octaves, scale, heightOffset, heightOffset);
-        float ZX = FractalBrownianMotion(z, x, octaves, scale, heightOffset, heightOffset);
-        float ZY = FractalBrownianMotion(z, y, octaves, scale, heightOffset, heightOffset);
+        float XY = FractalBrownianMotion(x, y, octaves, scale, heightScale, heightOffset);
+        float XZ = FractalBrownianMotion(x, z, octaves, scale, heightScale, heightOffset);
+        float YX = FractalBrownianMotion(y, x, octaves, scale, heightScale, heightOffset);
+        float YZ = FractalBrownianMotion(y, z, octaves, scale, heightScale, heightOffset);
+        float ZX = FractalBrownianMotion(z, x, octaves, scale, heightScale, heightOffset);
+        float ZY = FractalBrownianMotion(z, y, octaves, scale, heightScale, heightOffset);
 
         return (XY + XZ + YX + YZ + ZX + ZY) / 6f;
     }

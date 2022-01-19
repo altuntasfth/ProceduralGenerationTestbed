@@ -8,9 +8,9 @@ public class PerlinGrapher3D : MonoBehaviour
     [Range(0f, 1f)]
     public float scale = 0.5f;
     public int octaves = 1;
-    public float heightOffset;
+    public float heightOffset = 1f;
     [Range(0f, 10f)]
-    public float drawCutOff;
+    public float drawCutOff = 1;
     
     private Vector3 dimensions = new Vector3(10, 10, 10);
 
