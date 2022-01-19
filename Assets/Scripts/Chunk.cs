@@ -41,6 +41,18 @@ public class Chunk : MonoBehaviour
             int digCave = (int)MeshUtils.FractalBrownianMotion3D(x, y, z, World.caveSettings.octaves, 
                 World.caveSettings.scale, World.caveSettings.heightScale, World.caveSettings.heightOffset);
 
+            if (y == 0)
+            {
+                chunkData[i] = MeshUtils.BlockType.BEDROCK;
+                continue;
+            }
+            
+            if (digCave < World.caveSettings.probability)
+            {
+                chunkData[i] = MeshUtils.BlockType.AIR;
+                continue;
+            }
+            
             if (y == surfaceHeight)
                 chunkData[i] = MeshUtils.BlockType.GRASSSIDE;
             else if (y < diamondTopHeight && y > diamondBottomHeight && Random.Range(0f, 1f) <= World.diamondTopSettings.probability)
@@ -51,11 +63,6 @@ public class Chunk : MonoBehaviour
                 chunkData[i] = MeshUtils.BlockType.DIRT;
             else
                 chunkData[i] = MeshUtils.BlockType.AIR;
-
-            if (digCave < World.caveSettings.probability)
-            {
-                chunkData[i] = MeshUtils.BlockType.AIR;
-            }
         }
     }
 
