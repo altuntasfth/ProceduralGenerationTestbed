@@ -19,6 +19,7 @@ public class Chunk : MonoBehaviour
 
     public Block[,,] blocks;
     public MeshUtils.BlockType[] chunkData;
+    public MeshRenderer meshRenderer;
 
     private void BuildChunk()
     {

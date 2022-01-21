@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,6 +47,11 @@ public class World : MonoBehaviour
     public static PerlinSettings caveSettings;
     public PerlinGrapher3D caves;
 
+    private HashSet<Vector3Int> chunckChecker = new HashSet<Vector3Int>();
+    private HashSet<Vector2Int> chunckColumns = new HashSet<Vector2Int>();
+    private Dictionary<Vector3Int, Chunk> chunks = new Dictionary<Vector3Int, Chunk>();
+    private Vector3Int lastBuildPosition;
+
     private void Start()
     {
         loadingBar.maxValue = worldDimensions.x * worldDimensions.z;
@@ -63,9 +69,21 @@ public class World : MonoBehaviour
     {
         for (int y = 0; y < worldDimensions.y; y++)
         {
-            GameObject chunk = Instantiate(chunkPrefab);
-            Vector3Int position = new Vector3Int(x * chunkDimensions.x, y * chunkDimensions.y, z * chunkDimensions.z);
-            chunk.GetComponent<Chunk>().CreateChunk(chunkDimensions, position);
+            Vector3Int position = new Vector3Int(x, y * chunkDimensions.y, z);
+            
+            if (!chunckChecker.Contains(position))
+            {
+                GameObject chunk = Instantiate(chunkPrefab);
+                chunk.name = "Chunk_" + position.x + "_" + position.y + "_" + position.z;
+                Chunk c = chunk.GetComponent<Chunk>();
+                c.CreateChunk(chunkDimensions, position);
+                chunckChecker.Add(position);
+                chunks.Add(position, c);
+            }
+            else
+            {
+                chunks[position].meshRenderer.enabled = false;
+            }
         }
     }
 
@@ -75,7 +93,7 @@ public class World : MonoBehaviour
         {
             for (var x = 0; x < worldDimensions.x; x++)
             {
-                BuildChunkColumn(x, z);
+                BuildChunkColumn(x * chunkDimensions.x, z * chunkDimensions.z);
                 loadingBar.value++;
                 yield return null; 
             }
@@ -88,5 +106,6 @@ public class World : MonoBehaviour
         fpc.transform.position = new Vector3Int(xPos, yPos, zPos);
         loadingBar.gameObject.SetActive(false);
         fpc.SetActive(true);
+        lastBuildPosition = Vector3Int.CeilToInt(fpc.transform.position);
     }
 }
