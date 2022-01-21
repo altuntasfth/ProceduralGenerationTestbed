@@ -23,8 +23,8 @@ public struct PerlinSettings
 
 public class World : MonoBehaviour
 {
-    public static Vector3 worldDimensions = new Vector3(3, 3, 3);
-    public static Vector3 chunkDimensions = new Vector3(10, 10, 10);
+    public static Vector3Int worldDimensions = new Vector3Int(4, 4, 4);
+    public static Vector3Int chunkDimensions = new Vector3Int(10, 10, 10);
 
     public GameObject chunkPrefab;
     public GameObject mainCamera;
@@ -48,7 +48,7 @@ public class World : MonoBehaviour
 
     private void Start()
     {
-        loadingBar.maxValue = worldDimensions.x * worldDimensions.y * worldDimensions.z;
+        loadingBar.maxValue = worldDimensions.x * worldDimensions.z;
 
         surfaceSettings = new PerlinSettings(surface.heightScale, surface.scale, surface.octaves, surface.heightOffset, surface.probability);
         stoneSettings = new PerlinSettings(stone.heightScale, stone.scale, stone.octaves, stone.heightOffset, stone.probability);
@@ -59,28 +59,33 @@ public class World : MonoBehaviour
         StartCoroutine(BuildWorld());
     }
 
+    private void BuildChunkColumn(int x, int z)
+    {
+        for (int y = 0; y < worldDimensions.y; y++)
+        {
+            GameObject chunk = Instantiate(chunkPrefab);
+            Vector3Int position = new Vector3Int(x * chunkDimensions.x, y * chunkDimensions.y, z * chunkDimensions.z);
+            chunk.GetComponent<Chunk>().CreateChunk(chunkDimensions, position);
+        }
+    }
+
     IEnumerator BuildWorld()
     {
         for (var z = 0; z < worldDimensions.z; z++)
         {
-            for (var y = 0; y < worldDimensions.y; y++)
+            for (var x = 0; x < worldDimensions.x; x++)
             {
-                for (var x = 0; x < worldDimensions.x; x++)
-                {
-                    GameObject chunk = Instantiate(chunkPrefab);
-                    Vector3 position = new Vector3(x * chunkDimensions.x, y * chunkDimensions.y, z * chunkDimensions.z);
-                    chunk.GetComponent<Chunk>().CreateChunk(chunkDimensions, position);
-                    loadingBar.value++;
-                    yield return null; 
-                }
+                BuildChunkColumn(x, z);
+                loadingBar.value++;
+                yield return null; 
             }
         }
         
         mainCamera.SetActive(false);
-        float xPos = worldDimensions.x * chunkDimensions.x / 2f;
-        float zPos = worldDimensions.z * chunkDimensions.z / 2f;
-        float yPos = MeshUtils.FractalBrownianMotion(xPos, zPos, surface.octaves, surface.scale, surface.heightScale, surface.heightOffset) + 10f;
-        fpc.transform.position = new Vector3(xPos, yPos, zPos);
+        int xPos = worldDimensions.x * chunkDimensions.x / 2;
+        int zPos = worldDimensions.z * chunkDimensions.z / 2;
+        int yPos = (int)MeshUtils.FractalBrownianMotion(xPos, zPos, surface.octaves, surface.scale, surface.heightScale, surface.heightOffset) + 10;
+        fpc.transform.position = new Vector3Int(xPos, yPos, zPos);
         loadingBar.gameObject.SetActive(false);
         fpc.SetActive(true);
     }
